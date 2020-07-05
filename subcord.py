@@ -24,11 +24,13 @@ def get_feed(channel):
 
 # Parse config file
 webhook = None
+mention = None
 channels = None
 with open('channels.conf') as f:
     conf = f.read().split('\n')
     webhook = conf[0]
-    channels = conf[2:-1]
+    mention = conf[1]
+    channels = conf[3:-1]
     # Ignore comment after ID
     channels = [x.split(' ')[0] for x in channels]
 
@@ -56,7 +58,10 @@ for channel in channels:
     for video in feed['videos']:
         if video['id'] in ignore_videos:
             continue
-        post_data['content'] = video['title'] + '\n' + video['link']
+        if mention == None:
+            post_data['content'] = video['title'] + '\n' + video['link']
+        else:
+            post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
         requests.post(webhook, data = post_data)
         print(video['id'])
         ignore_videos.add(video['id'])

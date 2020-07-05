@@ -18,7 +18,6 @@ def get_feed(channel):
         vid['link'] = entry.find(pfx+'link').get('href')
         vid['id'] = entry.find(pfx+'id').text.split(':')[2]
         feed['videos'].append(vid)
-        print(vid['id'])
         #all_videos.add(vid['id'])
 
     return feed
@@ -59,6 +58,7 @@ for channel in channels:
             continue
         post_data['content'] = video['title'] + '\n' + video['link']
         requests.post(webhook, data = post_data)
+        print(video['id'])
         ignore_videos.add(video['id'])
         posted = True
 

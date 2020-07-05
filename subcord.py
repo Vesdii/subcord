@@ -58,10 +58,7 @@ for channel in channels:
     for video in feed['videos']:
         if video['id'] in ignore_videos:
             continue
-        if mention == None:
-            post_data['content'] = video['title'] + '\n' + video['link']
-        else:
-            post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
+        post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
         requests.post(webhook, data = post_data)
         print(video['id'])
         ignore_videos.add(video['id'])

@@ -24,15 +24,14 @@ def get_feed(channel):
     return feed
 
 # Parse config file
-# First line is the full Discord webhook URL
-#  Second line is empty
-#  Third and beyond lines are each the ID of a YouTube channel
 webhook = None
 channels = None
 with open('channels.conf') as f:
     conf = f.read().split('\n')
     webhook = conf[0]
     channels = conf[2:-1]
+    # Ignore comment after ID
+    channels = [x.split(' ')[0] for x in channels]
 
 # Create ignore file if it doesn't exist
 # NOTE: This method creates a file with a single newline character

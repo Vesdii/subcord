@@ -9,9 +9,11 @@ Example of `channels.conf`:
 ```
 https://discord.com/api/webhooks/XXXXX/XXXXX
 
-UCvF7Ll_WOgQWOw0KZJsVNXQ
-UCfe_znKY1ukrqlGActlFmaQ
+UCvF7Ll_WOgQWOw0KZJsVNXQ Elisha Long
+UCfe_znKY1ukrqlGActlFmaQ Healthy Software Developer
 ```
+
+Text preceded by a space serves as a comment for each line when listing channel IDs.
 
 ## Implementation
 

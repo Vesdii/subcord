@@ -18,7 +18,7 @@ UCfe_znKY1ukrqlGActlFmaQ Healthy Software Developer
 
 Text preceded by a space serves as a comment for each line when listing channel IDs.
 
-Mentioning can be disabled by leaving a space.
+Mentioning can be disabled by leaving the line empty.
 **Channel ids must start on the 4th line**
 
 ## Implementation

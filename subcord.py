@@ -1,4 +1,6 @@
 import requests
+import schedule
+import time
 import xml.etree.ElementTree as ET
 
 def get_feed(channel):
@@ -43,29 +45,38 @@ with open('ignore_videos') as f:
     ignore_videos = set(f.read().split('\n'))
 
 #all_videos = set()
-posted = False
+def post_vids():
+    print('Posting Vids')
+    posted = False
 
-for channel in channels:
-    feed = get_feed(channel)
-    if not feed:
-        print('FAILURE: '+channel)
-        continue
-
-    post_data = {}
-    post_data['username'] = feed['author']
-
-    # Post unposted videos
-    for video in feed['videos']:
-        if video['id'] in ignore_videos:
+    for channel in channels:
+        feed = get_feed(channel)
+        if not feed:
+            print('FAILURE: '+channel)
             continue
-        post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
-        requests.post(webhook, data = post_data)
-        print(video['id'])
-        ignore_videos.add(video['id'])
-        posted = True
+
+        post_data = {}
+        post_data['username'] = feed['author']
+
+        # Post unposted videos
+        for video in feed['videos']:
+            if video['id'] in ignore_videos:
+                continue
+            post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
+            requests.post(webhook, data = post_data)
+            print(video['id'])
+            ignore_videos.add(video['id'])
+            posted = True
 
 # TODO: remove ignored videos no longer in list of all videos
 
-if posted:
-    with open('ignore_videos', 'w') as f:
-        f.write('\n'.join(ignore_videos))
+    if posted:
+        with open('ignore_videos', 'w') as f:
+            f.write('\n'.join(ignore_videos))
+
+post_vids()
+schedule.every().hour.do(post_vids)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)

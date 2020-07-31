@@ -39,6 +39,7 @@ with open('channels.conf') as f:
 open('ignore_videos', 'a').close()
 # Parse ignore file
 ignore_videos = None
+ignore_videos_new = set()
 with open('ignore_videos') as f:
     ignore_videos = set(f.read().split('\n'))
 
@@ -57,15 +58,16 @@ for channel in channels:
     # Post unposted videos
     for video in feed['videos']:
         if video['id'] in ignore_videos:
+            ignore_videos_new.add(video['id'])
             continue
         post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
         requests.post(webhook, data = post_data)
         print(video['id'])
-        ignore_videos.add(video['id'])
+        ignore_videos_new.add(video['id'])
         posted = True
-
-# TODO: remove ignored videos no longer in list of all videos
 
 if posted:
     with open('ignore_videos', 'w') as f:
-        f.write('\n'.join(ignore_videos))
+        f.write('\n'.join(ignore_videos_new))
+else:
+    print("No new videos posted.")

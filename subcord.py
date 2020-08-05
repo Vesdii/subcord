@@ -49,13 +49,13 @@ allow_post = True
 
 #Parses arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--index', help='Indexes current videos without posting', action='store_true')
+parser.add_argument('-i', '--ignore', help='updates ignore_videos without updating', action='store_true')
 
 args = parser.parse_args()
 
 #Updates ignore_videos without posting on webhook
-if args.index:
-    print('Indexing current videos...')
+if args.ignore:
+    print('Adding current videos to ignore_videos...')
     allow_post = False
 
 for channel in channels:
@@ -82,6 +82,6 @@ for channel in channels:
 if ignore_videos != ignore_videos_new:
     with open('ignore_videos', 'w') as f:
         f.write('\n'.join(ignore_videos_new))
-    print('Ignored videos updated.')
+    print('Ignore_videos updated.')
 else:
     print('No new videos posted.')

@@ -31,5 +31,5 @@ I recommend running this with a cronjob scheduler every hour or so. For example,
 
 ```
 -h, --help   show this help message and exit
--i, --index  Indexes current videos without posting
+-i, --ignore  updates ignore_videos without updating
 ```

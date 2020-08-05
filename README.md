@@ -26,3 +26,10 @@ I recommend running this with a cronjob scheduler every hour or so. For example,
 ```
 5 * * * * python3 ~/subcord/subcord.py
 ```
+
+## Options
+
+```
+-h, --help   show this help message and exit
+-i, --index  Indexes current videos without posting
+```

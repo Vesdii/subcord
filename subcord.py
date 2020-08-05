@@ -1,4 +1,5 @@
 import requests
+import argparse
 import xml.etree.ElementTree as ET
 
 def get_feed(channel):
@@ -45,6 +46,18 @@ with open('ignore_videos') as f:
 
 #all_videos = set()
 posted = False
+allow_post = True
+
+#Parses arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--index', help='Indexes current videos without posting', action='store_true')
+
+args = parser.parse_args()
+
+#Updates ignore_videos without posting on webhook
+if args.index:
+    print('Indexing current videos...')
+    allow_post = False
 
 for channel in channels:
     feed = get_feed(channel)
@@ -61,7 +74,8 @@ for channel in channels:
             ignore_videos_new.add(video['id'])
             continue
         post_data['content'] = mention + ' ' + video['title'] + '\n' + video['link']
-        requests.post(webhook, data = post_data)
+        if allow_post:
+            requests.post(webhook, data = post_data)
         print(video['id'])
         ignore_videos_new.add(video['id'])
         posted = True
@@ -70,4 +84,8 @@ if posted:
     with open('ignore_videos', 'w') as f:
         f.write('\n'.join(ignore_videos_new))
 else:
-    print("No new videos posted.")
+    if allow_post:
+        print('No new videos posted.')
+
+if not allow_post:
+    print('Ignored videos updated.')

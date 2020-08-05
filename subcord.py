@@ -44,8 +44,7 @@ ignore_videos_new = set()
 with open('ignore_videos') as f:
     ignore_videos = set(f.read().split('\n'))
 
-#all_videos = set()
-posted = False
+#Post videos by default
 allow_post = True
 
 #Parses arguments
@@ -78,14 +77,11 @@ for channel in channels:
             requests.post(webhook, data = post_data)
         print(video['id'])
         ignore_videos_new.add(video['id'])
-        posted = True
 
-if posted:
+#if posted:
+if ignore_videos != ignore_videos_new:
     with open('ignore_videos', 'w') as f:
         f.write('\n'.join(ignore_videos_new))
-else:
-    if allow_post:
-        print('No new videos posted.')
-
-if not allow_post:
     print('Ignored videos updated.')
+else:
+    print('No new videos posted.')

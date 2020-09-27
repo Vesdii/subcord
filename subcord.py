@@ -68,7 +68,7 @@ for channel in channels:
     post_data['username'] = feed['author']
 
     # Post unposted videos
-    for video in feed['videos']:
+    for video in feed['videos'][::-1]:
         if video['id'] in ignore_videos:
             ignore_videos_new.add(video['id'])
             continue

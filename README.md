@@ -11,13 +11,13 @@ The already posted videos are tracked via the `ignore_videos` dump file, listing
  2  <(Optional) Discord role ID to mention>
  3  
  4  <YouTube channel ID>
- 5  <YouTube channel ID> <Name of channel>
+ 5  <YouTube channel ID> <name of channel>
 ...
 ```
 
 Text after a space serves as a comment for each line when listing channel IDs.
 
-Mentioning can be disabled by leaving the line empty.
+Mentioning can be disabled by leaving line 2 empty.
 
 ## Implementation
 
